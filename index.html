@@ -3,191 +3,194 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Valentine Journey ❤️</title>
+    <title>Our Love Story ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@500&display=swap" rel="stylesheet">
     <style>
         :root {
             --pink: #ff85a2;
             --dark-pink: #ff4d6d;
             --soft-bg: #fff0f3;
-            --gold: #d4af37;
         }
 
         body, html {
             margin: 0; padding: 0;
             background-color: var(--soft-bg);
-            font-family: 'Georgia', serif;
+            font-family: 'Quicksand', sans-serif;
             color: #444;
             scroll-behavior: smooth;
+            overflow-x: hidden;
         }
 
-        /* 1. Opening Section (Full Screen) */
-        .section-full {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            position: relative;
+        /* 1. Opening Interface */
+        #opening-page {
+            position: fixed; inset: 0;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            background: linear-gradient(135deg, #fff0f3 0%, #ffccd5 100%);
+            z-index: 1000; transition: transform 1s ease-in-out;
         }
 
-        /* 2. Floating Decorations */
-        .decoration {
-            position: fixed; pointer-events: none; z-index: 1;
+        .main-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 5rem; /* Bigger Font */
+            color: var(--dark-pink);
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
 
-        /* 3. Boutique Photo Gallery */
-        .gallery-container {
-            padding: 50px 20px;
-            background: white;
-            border-top: 5px solid var(--pink);
-            border-bottom: 5px solid var(--pink);
-        }
-
-        .boutique-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .photo-frame {
-            border: 10px solid white;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transform: rotate(calc(var(--r, 0) * 1deg));
+        .open-btn {
+            font-size: 1.5rem; padding: 15px 40px;
+            background: var(--dark-pink); color: white;
+            border: none; border-radius: 50px; cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
             transition: 0.3s;
         }
 
-        .photo-frame:hover { transform: rotate(0deg) scale(1.05); z-index: 10; }
+        .open-btn:hover { transform: scale(1.1); background: #c9184a; }
 
-        .photo-frame img { width: 100%; height: 300px; object-fit: cover; display: block; }
-
-        /* 4. Password Protection Section */
-        .secret-vault {
-            background: linear-gradient(to bottom, #fff0f3, #ffccd5);
-            padding: 100px 20px;
-            text-align: center;
+        /* 2. Content Sections */
+        .section {
+            min-height: 100vh;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            padding: 40px 20px; text-align: center;
+            position: relative;
         }
 
-        .password-box {
+        /* 3. Meetup Section & Quotes */
+        .march-meetup {
             background: white;
+            width: 100%;
+            border-top: 10px solid var(--pink);
+        }
+
+        .highlight-text {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4rem; /* Bigger Font */
+            color: var(--dark-pink);
+            margin-bottom: 30px;
+        }
+
+        .quote-card {
+            max-width: 800px;
+            font-size: 1.8rem; /* Bigger Font */
+            font-style: italic;
+            line-height: 1.6;
+            color: #666;
+            margin: 20px;
             padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(255, 77, 109, 0.2);
-            display: inline-block;
+            border-left: 5px solid var(--pink);
+            background: #fffafa;
         }
 
-        input[type="password"] {
-            padding: 10px;
-            border: 2px solid var(--pink);
-            border-radius: 10px;
-            outline: none;
-            margin-bottom: 10px;
+        /* 4. Password Section */
+        .vault-section {
+            background: var(--soft-bg);
+            padding: 100px 0;
         }
 
-        .unlock-btn {
-            background: var(--dark-pink);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 10px;
-            cursor: pointer;
+        .pass-input {
+            font-size: 1.2rem; padding: 15px;
+            border: 2px solid var(--pink); border-radius: 10px;
+            width: 250px; margin-bottom: 20px;
         }
 
-        #hidden-content {
-            display: none;
-            margin-top: 40px;
-            animation: fadeIn 1.5s ease;
+        /* Animations */
+        .floating-emoji {
+            position: fixed; top: -50px; z-index: 0;
+            pointer-events: none; animation: fall linear forwards;
         }
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        /* Scroll Down Indicator */
-        .scroll-down {
-            position: absolute; bottom: 20px;
-            animation: bounce 2s infinite;
-            font-size: 2rem; color: var(--dark-pink);
+        @keyframes fall {
+            to { transform: translateY(110vh) rotate(360deg); }
         }
 
-        @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 40% {transform: translateY(-10px);} 60% {transform: translateY(-5px);} }
+        #hidden-messages { display: none; animation: fadeIn 2s; }
+        @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
     </style>
 </head>
 <body>
 
-    <section class="section-full">
-        <h1 style="color: var(--dark-pink); font-size: 3rem;">Happy Valentine's Day!</h1>
-        <p style="font-style: italic;">Scroll down to see our beautiful journey... ✨</p>
-        <div class="scroll-down">↓</div>
-    </section>
+    <audio id="bgMusic" loop>
+        <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
+    </audio>
 
-    <section class="gallery-container">
-        <h2 style="text-align: center; color: var(--dark-pink); margin-bottom: 40px;">Our Boutique of Memories 📸</h2>
-        <div class="boutique-grid">
-            <div class="photo-frame" style="--r: -3"><img src="https://picsum.photos/300/401"></div>
-            <div class="photo-frame" style="--r: 2"><img src="https://picsum.photos/300/402"></div>
-            <div class="photo-frame" style="--r: -2"><img src="https://picsum.photos/300/403"></div>
-            <div class="photo-frame" style="--r: 4"><img src="https://picsum.photos/300/404"></div>
-        </div>
-    </section>
+    <div id="opening-page">
+        <h1 class="main-title">Happy Valentine's Day</h1>
+        <button class="open-btn" onclick="initSite()">Open My Valentine 💌</button>
+    </div>
 
-    <section class="secret-vault">
-        <div class="password-box">
-            <h3>🔐 Locked with a Special Date</h3>
-            <p>Enter the password to see my hidden messages:</p>
-            <input type="password" id="passInput" placeholder="Enter Password...">
-            <br>
-            <button class="unlock-btn" onclick="checkPassword()">Unlock My Heart</button>
-        </div>
-
-        <div id="hidden-content">
-            <h2 style="color: var(--dark-pink);">My Secret Messages for You 📜</h2>
-            <div style="max-width: 600px; margin: 0 auto; line-height: 1.8; font-size: 1.2rem;">
-                <p>❤️ "I remember the day we first met like it was yesterday..."</p>
-                <p>❤️ "You are the most beautiful person I've ever known, inside and out."</p>
-                <p>❤️ "September 15 is a date I'll never forget. Thank you for being mine."</p>
+    <div id="main-wrapper">
+        
+        <section class="section march-meetup">
+            <h2 class="highlight-text">Our First Meetup: March</h2>
+            <div class="quote-card">
+                "The world changed when we first met in March. It wasn't just a meeting; it was the start of my favorite story."
             </div>
-            <h3 style="margin-top: 50px;">I Love You Forever! 💋</h3>
-        </div>
-    </section>
+            <div class="quote-card">
+                "Every love story is beautiful, but ours is my favorite. ❤️"
+            </div>
+            <p style="font-size: 1.5rem; color: var(--dark-pink);">Scroll down for more...</p>
+        </section>
+
+        <section class="section" style="background: white;">
+            <h2 class="highlight-text">Our Boutique of Memories</h2>
+            <div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;">
+                <img src="https://picsum.photos/300/300" style="border: 8px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-radius: 10px;">
+                <img src="https://picsum.photos/301/300" style="border: 8px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-radius: 10px;">
+            </div>
+        </section>
+
+        <section class="section vault-section">
+            <h2 class="highlight-text">The Hidden Vault</h2>
+            <div id="lock-interface">
+                <p style="font-size: 1.4rem;">Enter our special date to unlock hidden messages:</p>
+                <input type="password" id="passCode" class="pass-input" placeholder="Password...">
+                <br>
+                <button class="open-btn" onclick="unlock()">Unlock</button>
+            </div>
+
+            <div id="hidden-messages">
+                <div class="quote-card" style="border-left: 5px solid gold;">
+                    "My secret for you: My heart belongs to you forever. September 15 is when my life truly began."
+                </div>
+                <h1 class="highlight-text">I Love You! 💋</h1>
+            </div>
+        </section>
+    </div>
 
     <script>
-        // Floating Hearts logic
-        function createFlower() {
-            const flower = document.createElement('div');
-            flower.innerHTML = Math.random() > 0.5 ? '🌸' : '🌹';
-            flower.style.position = 'fixed';
-            flower.style.top = '-50px';
-            flower.style.left = Math.random() * 100 + 'vw';
-            flower.style.fontSize = Math.random() * 20 + 10 + 'px';
-            flower.style.opacity = Math.random();
-            flower.style.zIndex = '0';
+        function initSite() {
+            // Hide opening page
+            document.getElementById('opening-page').style.transform = 'translateY(-100%)';
             
-            const duration = Math.random() * 5 + 5;
-            flower.style.transition = `transform ${duration}s linear, opacity ${duration}s`;
-            
-            document.body.appendChild(flower);
+            // Start Music
+            const music = document.getElementById('bgMusic');
+            music.play().catch(e => console.log("Music failed to autoplay"));
 
-            setTimeout(() => {
-                flower.style.transform = `translateY(110vh) rotate(${Math.random() * 360}deg)`;
-            }, 100);
-
-            setTimeout(() => flower.remove(), duration * 1000);
+            // Start Decorations
+            setInterval(createDecoration, 400);
         }
 
-        setInterval(createFlower, 400);
+        function createDecoration() {
+            const emojis = ['🌸', '🌹', '💖', '✨', '🎈'];
+            const e = document.createElement('div');
+            e.className = 'floating-emoji';
+            e.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+            e.style.left = Math.random() * 100 + 'vw';
+            e.style.fontSize = (Math.random() * 20 + 20) + 'px';
+            e.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            document.body.appendChild(e);
+            setTimeout(() => e.remove(), 6000);
+        }
 
-        // Password Logic
-        function checkPassword() {
-            const input = document.getElementById('passInput').value;
-            const vault = document.getElementById('hidden-content');
-            
-            if (input === "September15") {
-                vault.style.display = "block";
-                document.querySelector('.password-box').style.display = "none";
-                window.scrollBy(0, 400); // Scroll down a bit to show content
+        function unlock() {
+            const code = document.getElementById('passCode').value;
+            if(code === "September15") {
+                document.getElementById('lock-interface').style.display = "none";
+                document.getElementById('hidden-messages').style.display = "block";
             } else {
-                alert("Incorrect Password! Hint: Think of our special date.");
+                alert("Wrong password! Hint: Our special date.");
             }
         }
     </script>
