@@ -191,6 +191,12 @@
             document.body.appendChild(h);
             setTimeout(() => h.remove(), 6000);
         }
+        <div class="card">
+    <h3>Send a Valentine Note 💋</h3>
+    <textarea id="naimaMsg" placeholder="Write your message here..." style="width:100%; height:120px; font-size:1.4rem; border-radius:20px; padding:15px; border:2px solid #ff4d6d;"></textarea>
+    <button class="btn-love" onclick="sendLoveMessage()">Send to Amish 💌</button>
+</div>
+            
 
         function unlock() {
             const input = document.getElementById('pass').value;
