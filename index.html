@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Private Universe ❤️</title>
+    <title>Our Private Boutique ❤️</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -20,7 +20,7 @@
             overflow-x: hidden;
         }
 
-        /* Welcome Screen */
+        /* Opening Screen */
         #opening-page {
             position: fixed; inset: 0;
             display: flex; flex-direction: column;
@@ -31,84 +31,79 @@
 
         .main-title {
             font-family: 'Dancing Script', cursive;
-            font-size: clamp(3.5rem, 12vw, 6rem);
+            font-size: clamp(3.5rem, 10vw, 5rem);
             color: var(--dark-pink);
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.1);
+            text-align: center;
         }
 
         .open-btn {
-            font-size: 1.6rem; padding: 18px 50px;
+            font-size: 1.4rem; padding: 15px 45px;
             background: var(--dark-pink); color: white;
             border: none; border-radius: 50px; cursor: pointer;
-            box-shadow: 0 8px 20px rgba(255, 77, 109, 0.4);
-            transition: 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.3);
+            margin-top: 20px;
         }
 
-        .open-btn:hover { transform: scale(1.1) translateY(-3px); }
-
-        /* Content Layout */
-        .container { max-width: 1000px; margin: 0 auto; padding: 60px 20px; }
+        /* Content Sections */
+        .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
 
         .section-title {
             font-family: 'Dancing Script', cursive;
-            font-size: 4rem; color: var(--dark-pink);
-            text-align: center; margin-bottom: 40px;
+            font-size: 3.5rem; color: var(--dark-pink);
+            text-align: center; margin-bottom: 30px;
         }
 
-        /* Quote Wall - Fills Blank Space */
-        .quote-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px; margin-bottom: 80px;
+        /* Quotes Paragraphs - Fills Blank Space */
+        .quote-container {
+            background: white; padding: 40px; border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            margin-bottom: 50px; line-height: 1.8; font-size: 1.25rem;
+            color: #555; border-left: 10px solid var(--pink);
         }
 
-        .quote-card {
-            background: white; padding: 30px; border-radius: 20px;
-            border-bottom: 5px solid var(--pink);
-            font-size: 1.25rem; line-height: 1.7; font-style: italic;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        /* Private Gallery Option */
+        .upload-section {
+            text-align: center; margin-bottom: 60px;
+            padding: 30px; border: 2px dashed var(--pink); border-radius: 20px;
         }
 
-        /* Personal Memories Gallery */
-        .memory-gallery {
-            display: flex; flex-wrap: wrap; justify-content: center; gap: 30px;
-            margin-bottom: 100px;
+        #image-upload { display: none; }
+
+        .upload-label {
+            background: var(--pink); color: white; padding: 12px 25px;
+            border-radius: 10px; cursor: pointer; display: inline-block;
+            font-weight: 600; transition: 0.3s;
+        }
+
+        .gallery-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px; margin-top: 30px;
         }
 
         .polaroid {
-            background: white; padding: 15px 15px 40px 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            transform: rotate(var(--r)); transition: 0.4s;
-            max-width: 280px;
+            background: white; padding: 15px 15px 35px 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            animation: fadeIn 0.5s ease;
         }
-
-        .polaroid:hover { transform: rotate(0deg) scale(1.08); z-index: 10; }
 
         .polaroid img { width: 100%; height: 250px; object-fit: cover; }
 
-        .polaroid-caption {
-            font-family: 'Dancing Script', cursive;
-            font-size: 1.8rem; text-align: center; margin-top: 15px; color: #555;
-        }
-
-        /* Password Vault */
+        /* Hidden Vault */
         .vault-box {
-            background: white; padding: 50px; border-radius: 30px;
-            text-align: center; border: 3px dashed var(--pink);
+            background: white; padding: 40px; border-radius: 20px;
+            text-align: center; border: 2px solid var(--pink);
         }
 
-        .vault-input {
-            font-size: 1.3rem; padding: 15px; width: 80%; max-width: 300px;
-            border: 2px solid var(--pink); border-radius: 15px; margin-bottom: 20px;
+        #hidden-content {
+            display: none; text-align: left; padding: 20px;
+            font-size: 1.2rem; line-height: 1.8; animation: slideUp 0.8s;
         }
 
-        #hidden-message-area {
-            display: none; text-align: left; padding: 40px;
-            background: #fff; border-radius: 20px; margin-top: 30px;
-            line-height: 2; font-size: 1.3rem; border: 2px solid var(--pink);
-        }
+        @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
+        @keyframes slideUp { from {opacity: 0; transform: translateY(20px);} to {opacity: 1; transform: translateY(0);} }
 
-        /* Decorations */
-        .heart { position: fixed; top: -50px; pointer-events: none; z-index: 999; animation: fall linear forwards; }
+        /* Falling Decorations */
+        .decoration { position: fixed; top: -50px; pointer-events: none; z-index: 999; animation: fall linear forwards; }
         @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
     </style>
 </head>
@@ -119,80 +114,91 @@
     </audio>
 
     <div id="opening-page">
-        <h1 class="main-title">For My Valentine</h1>
-        <button class="open-btn" onclick="startStory()">Unlock Our Story 💌</button>
+        <h1 class="main-title">Happy Valentine's Day</h1>
+        <button class="open-btn" onclick="startExperience()">Open Our Boutique 💌</button>
     </div>
 
     <div class="container">
-        <h2 class="section-title">March: Where It All Began</h2>
+        <h2 class="section-title">March Meetup & Love Quotes</h2>
         
-        <div class="quote-grid">
-            <div class="quote-card">"Since that day in March, my heart found its rhythm. You aren't just a part of my life, you are my life."</div>
-            <div class="quote-card">"I never believed in soulmates until our first meetup. Every moment since then has been a beautiful dream."</div>
-            <div class="quote-card">"Meeting you was like finally hearing the rest of a song I’ve known my whole life."</div>
+        <div class="quote-container">
+            "Meeting you in March was like the first day of spring—unexpected, beautiful, and full of life. They say that love is just a word until someone special comes along and gives it meaning. For me, that person is you. Every quote about soulmates and forever suddenly made sense the moment our paths crossed. I am thankful for every second, every smile, and every memory we have shared."
+            <br><br>
+            "You are the light that guides me and the peace that calms me. In a world full of temporary things, you are my forever. Happy Valentine's Day to the one who holds my heart."
         </div>
 
-        <h2 class="section-title">Our Private Memories</h2>
-        <div class="memory-gallery">
-            <div class="polaroid" style="--r: -3deg">
-                <img src="https://picsum.photos/300/300?random=1">
-                <div class="polaroid-caption">That Special Day</div>
-            </div>
-            <div class="polaroid" style="--r: 2deg">
-                <img src="https://picsum.photos/300/300?random=2">
-                <div class="polaroid-caption">Favorite Moment</div>
-            </div>
-            <div class="polaroid" style="--r: -2deg">
-                <img src="https://picsum.photos/300/300?random=3">
-                <div class="polaroid-caption">Infinite Love</div>
-            </div>
+        <h2 class="section-title">Personal Memories</h2>
+        <div class="upload-section">
+            <p>This space is for <b>your</b> memories only. Click below to add your favorite photos from your device.</p>
+            <label for="image-upload" class="upload-label">➕ Add Photos From Gallery</label>
+            <input type="file" id="image-upload" accept="image/*" multiple onchange="handleFiles(this.files)">
+            
+            <div class="gallery-grid" id="gallery-grid">
+                </div>
         </div>
 
         <div class="vault-box">
-            <h2 class="section-title" style="font-size: 3rem;">The Secret Vault</h2>
-            <div id="password-screen">
-                <p style="font-size: 1.4rem;">Enter the password to see my heart's deepest wishes:</p>
-                <input type="password" id="vaultPass" class="vault-input" placeholder="Enter Password">
-                <br>
-                <button class="open-btn" onclick="checkPass()">Unlock Messages</button>
+            <h2 class="section-title" style="font-size: 2.5rem;">Secret Vault</h2>
+            <div id="lock-interface">
+                <p>Enter the password to see hidden messages:</p>
+                <input type="password" id="passInput" style="padding:10px; border-radius:10px; border:1px solid var(--pink);" placeholder="Password">
+                <button class="open-btn" style="padding:10px 20px; font-size:1rem;" onclick="checkPassword()">Unlock</button>
             </div>
 
-            <div id="hidden-message-area">
-                <p><i>"My dearest, these words are for your eyes only. Ever since that first meetup in March, my world has revolved around you. September 15 isn't just a date; it's a milestone of my happiness."</i></p>
-                <p><i>"I want you to know that every quote on this page is true because of you. I promise to keep building these memories with you, one day at a time. You are my forever Valentine."</i></p>
-                <h1 style="text-align: center; color: var(--dark-pink); font-family: 'Dancing Script';">I Love You ❤️</h1>
+            <div id="hidden-content">
+                <p><i>"September 15—a date that changed everything. My secret for you is simple: I love you more today than I did yesterday, but not as much as I will tomorrow. You are my greatest gift."</i></p>
+                <p><i>"Thank you for being my partner, my best friend, and my favorite person in the world. ❤️"</i></p>
             </div>
         </div>
     </div>
 
     <script>
-        function startStory() {
+        function startExperience() {
             document.getElementById('opening-page').style.transform = 'translateY(-100%)';
             document.getElementById('bgMusic').play();
-            setInterval(spawnHeart, 300);
+            setInterval(createDecoration, 300);
         }
 
-        function spawnHeart() {
-            const h = document.createElement('div');
-            h.className = 'heart';
-            h.innerHTML = ['❤️', '💖', '🌸', '🌹'][Math.floor(Math.random()*4)];
-            h.style.left = Math.random() * 100 + 'vw';
-            h.style.fontSize = Math.random() * 20 + 20 + 'px';
-            h.style.animationDuration = Math.random() * 3 + 3 + 's';
-            document.body.appendChild(h);
-            setTimeout(() => h.remove(), 6000);
+        function createDecoration() {
+            const symbols = ['❤️', '💖', '🌸', '🌹'];
+            const d = document.createElement('div');
+            d.className = 'decoration';
+            d.innerText = symbols[Math.floor(Math.random()*4)];
+            d.style.left = Math.random() * 100 + 'vw';
+            d.style.fontSize = Math.random() * 20 + 20 + 'px';
+            d.style.animationDuration = Math.random() * 3 + 3 + 's';
+            document.body.appendChild(d);
+            setTimeout(() => d.remove(), 6000);
         }
 
-        function checkPass() {
-            const pass = document.getElementById('vaultPass').value;
-            if(pass === "September15") {
-                document.getElementById('password-screen').style.display = 'none';
-                document.getElementById('hidden-message-area').style.display = 'block';
-                window.scrollBy(0, 300);
+        // Logic to handle user photo uploads
+        function handleFiles(files) {
+            const grid = document.getElementById('gallery-grid');
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    const div = document.createElement('div');
+                    div.className = 'polaroid';
+                    div.innerHTML = `<img src="${e.target.result}"><div style="margin-top:10px; font-style:italic;">Our Memory</div>`;
+                    grid.appendChild(div);
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function checkPassword() {
+            const input = document.getElementById('passInput').value;
+            if(input === "September15") {
+                document.getElementById('lock-interface').style.display = 'none';
+                document.getElementById('hidden-content').style.display = 'block';
             } else {
-                alert("Incorrect Password! Hint: Our special date.");
+                alert("Incorrect password! ❤️");
             }
         }
     </script>
 </body>
 </html>
+
+        
