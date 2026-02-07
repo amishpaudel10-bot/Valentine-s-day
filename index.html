@@ -1,60 +1,218 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Valentine ❤️</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Valentine 💖</title>
+    <style>
+        :root {
+            --pink: #ff85a2;
+            --dark-pink: #ff4d6d;
+            --bg: #fff0f3;
+        }
+
+        body, html {
+            margin: 0; padding: 0; width: 100%; height: 100%;
+            font-family: 'Segoe UI', cursive, sans-serif;
+            background-color: var(--bg);
+            overflow: hidden;
+        }
+
+        /* 1. Opening Page */
+        #opening-page {
+            position: fixed; inset: 0;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            background: var(--bg); z-index: 100;
+            transition: opacity 1s ease;
+        }
+
+        .envelope-btn {
+            font-size: 5rem; cursor: pointer;
+            transition: transform 0.3s;
+            background: none; border: none;
+        }
+
+        .envelope-btn:hover { transform: scale(1.1) rotate(5deg); }
+
+        /* 2. Background Decorations */
+        .particle {
+            position: absolute; pointer-events: none;
+            z-index: 1; animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* 3. Main Content (Hidden Initially) */
+        #main-content {
+            display: none; height: 100vh;
+            flex-direction: column; align-items: center;
+            padding-top: 50px; overflow-y: auto;
+            position: relative; z-index: 10;
+        }
+
+        /* 4. Photo Gallery (Slideshow) */
+        .slideshow-container {
+            position: relative; width: 300px; height: 400px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 8px solid white; border-radius: 15px;
+            overflow: hidden; background: #eee;
+        }
+
+        .slide { display: none; width: 100%; height: 100%; object-fit: cover; }
+        .slide.active { display: block; animation: fade 0.8s; }
+
+        .nav-btn {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            background: rgba(255,255,255,0.7); border: none;
+            padding: 10px; cursor: pointer; border-radius: 50%;
+        }
+        .prev { left: 10px; } .next { right: 10px; }
+
+        @keyframes fade { from {opacity: .4} to {opacity: 1} }
+
+        /* 5. Love Message (Typewriter) */
+        #message-box {
+            margin: 30px; text-align: center;
+            color: var(--dark-pink); font-size: 1.5rem;
+            min-height: 60px; max-width: 80%;
+        }
+
+        /* 6. Music Controls */
+        .music-ctrl {
+            position: fixed; bottom: 20px; right: 20px;
+            background: white; border-radius: 50%;
+            width: 50px; height: 50px; display: flex;
+            justify-content: center; align-items: center;
+            cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            z-index: 200;
+        }
+
+        /* 7. Final Love Meter */
+        .love-meter-container {
+            width: 80%; max-width: 300px;
+            background: #ddd; border-radius: 20px;
+            margin: 20px 0; overflow: hidden;
+        }
+        #love-bar {
+            width: 0%; height: 20px;
+            background: linear-gradient(to right, var(--pink), var(--dark-pink));
+            transition: width 2s ease-out;
+        }
+    </style>
 </head>
 <body>
 
-<!-- Opening Screen -->
-<div id="startScreen">
-  <h1>💖 Happy Valentine 💖</h1>
-  <button onclick="startLove()">Open My Valentine 💌</button>
-</div>
+    <div id="opening-page">
+        <h1 style="color: var(--dark-pink);">For My Valentine...</h1>
+        <button class="envelope-btn" onclick="startExperience()">💌</button>
+        <p>Click to Open</p>
+    </div>
 
-<!-- Main Content -->
-<div id="main" class="hidden">
+    <div id="main-content">
+        <div class="slideshow-container">
+            <img src="https://picsum.photos/id/101/300/400" class="slide active">
+            <img src="https://picsum.photos/id/102/300/400" class="slide">
+            <img src="https://picsum.photos/id/103/300/400" class="slide">
+            
+            <button class="nav-btn prev" onclick="changeSlide(-1)">❮</button>
+            <button class="nav-btn next" onclick="changeSlide(1)">❯</button>
+        </div>
 
-  <!-- Music -->
-  <audio id="music" loop>
-    <source src="music.mp3" type="audio/mpeg">
-  </audio>
+        <div id="message-box"></div>
 
-  <!-- Header -->
-  <h2>Naima ❤️ Amish</h2>
+        <p style="margin-top: 20px;">My Love for You:</p>
+        <div class="love-meter-container">
+            <div id="love-bar"></div>
+        </div>
+        <h2 id="final-text" style="color: var(--dark-pink); display: none;">I Love You ❤️</h2>
+    </div>
 
-  <!-- Message -->
-  <p class="message">
-    I’m thankful to have you in my life ❤️  
-    You make my world beautiful 💕  
-    Happy Valentine’s Day 😘
-  </p>
+    <div class="music-ctrl" onclick="toggleMusic()">🎵</div>
+    
+    <audio id="romantic-song" loop>
+        <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
+    </audio>
 
-  <!-- Slider -->
-  <div class="slider">
-    <img id="slide" src="img1.jpg">
-  </div>
+    <script>
+        // 1. Particle System (Hearts & Petals)
+        function createParticle() {
+            const symbols = ['❤️', '🌸', '🌹', '✨', '💖'];
+            const p = document.createElement('div');
+            p.classList.add('particle');
+            p.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+            p.style.left = Math.random() * 100 + 'vw';
+            p.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            p.style.fontSize = (Math.random() * 20 + 10) + 'px';
+            document.body.appendChild(p);
+            setTimeout(() => p.remove(), 5000);
+        }
 
-  <!-- Buttons -->
-  <div class="controls">
-    <button onclick="prev()">⬅️</button>
-    <button onclick="next()">➡️</button>
-  </div>
+        // 2. Start Experience
+        function startExperience() {
+            document.getElementById('opening-page').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('opening-page').style.display = 'none';
+                document.getElementById('main-content').style.display = 'flex';
+                // Start music
+                document.getElementById('romantic-song').play();
+                // Start particle flow
+                setInterval(createParticle, 300);
+                // Start Love Meter
+                setTimeout(() => {
+                    document.getElementById('love-bar').style.width = '100%';
+                    setTimeout(() => document.getElementById('final-text').style.display = 'block', 2000);
+                }, 500);
+                // Start Typewriter
+                startTypewriter();
+            }, 1000);
+        }
 
-  <!-- Surprise -->
-  <button class="surprise" onclick="showSurprise()">
-    🎁 Click for Surprise
-  </button>
+        // 3. Slideshow Logic
+        let currentSlide = 0;
+        function changeSlide(n) {
+            const slides = document.querySelectorAll('.slide');
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + n + slides.length) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
 
-  <div id="surpriseBox" class="hidden">
-    <h3>I Love You Forever ❤️</h3>
-    <p>You are my everything 💕</p>
-  </div>
+        // 4. Typewriter Effect
+        const messages = [
+            "I'm thankful to have you in my life ❤️",
+            "You make my world beautiful.",
+            "Happy Valentine’s Day, my love!",
+            "Every moment with you is a treasure."
+        ];
+        let msgIndex = 0;
+        function startTypewriter() {
+            const box = document.getElementById('message-box');
+            let charIndex = 0;
+            box.innerHTML = "";
+            
+            function type() {
+                if (charIndex < messages[msgIndex].length) {
+                    box.innerHTML += messages[msgIndex].charAt(charIndex);
+                    charIndex++;
+                    setTimeout(type, 100);
+                } else {
+                    setTimeout(() => {
+                        msgIndex = (msgIndex + 1) % messages.length;
+                        startTypewriter();
+                    }, 2000);
+                }
+            }
+            type();
+        }
 
-</div>
-
-<script src="script.js"></script>
+        // 5. Music Toggle
+        function toggleMusic() {
+            const song = document.getElementById('romantic-song');
+            song.paused ? song.play() : song.pause();
+        }
+    </script>
 </body>
 </html>
