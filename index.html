@@ -3,215 +3,192 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Valentine 💖</title>
+    <title>Our Valentine Journey ❤️</title>
     <style>
         :root {
             --pink: #ff85a2;
             --dark-pink: #ff4d6d;
-            --bg: #fff0f3;
+            --soft-bg: #fff0f3;
+            --gold: #d4af37;
         }
 
         body, html {
-            margin: 0; padding: 0; width: 100%; height: 100%;
-            font-family: 'Segoe UI', cursive, sans-serif;
-            background-color: var(--bg);
-            overflow: hidden;
+            margin: 0; padding: 0;
+            background-color: var(--soft-bg);
+            font-family: 'Georgia', serif;
+            color: #444;
+            scroll-behavior: smooth;
         }
 
-        /* 1. Opening Page */
-        #opening-page {
-            position: fixed; inset: 0;
-            display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
-            background: var(--bg); z-index: 100;
-            transition: opacity 1s ease;
+        /* 1. Opening Section (Full Screen) */
+        .section-full {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
         }
 
-        .envelope-btn {
-            font-size: 5rem; cursor: pointer;
-            transition: transform 0.3s;
-            background: none; border: none;
+        /* 2. Floating Decorations */
+        .decoration {
+            position: fixed; pointer-events: none; z-index: 1;
         }
 
-        .envelope-btn:hover { transform: scale(1.1) rotate(5deg); }
-
-        /* 2. Background Decorations */
-        .particle {
-            position: absolute; pointer-events: none;
-            z-index: 1; animation: fall linear infinite;
+        /* 3. Boutique Photo Gallery */
+        .gallery-container {
+            padding: 50px 20px;
+            background: white;
+            border-top: 5px solid var(--pink);
+            border-bottom: 5px solid var(--pink);
         }
 
-        @keyframes fall {
-            0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        .boutique-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
         }
 
-        /* 3. Main Content (Hidden Initially) */
-        #main-content {
-            display: none; height: 100vh;
-            flex-direction: column; align-items: center;
-            padding-top: 50px; overflow-y: auto;
-            position: relative; z-index: 10;
+        .photo-frame {
+            border: 10px solid white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transform: rotate(calc(var(--r, 0) * 1deg));
+            transition: 0.3s;
         }
 
-        /* 4. Photo Gallery (Slideshow) */
-        .slideshow-container {
-            position: relative; width: 300px; height: 400px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            border: 8px solid white; border-radius: 15px;
-            overflow: hidden; background: #eee;
+        .photo-frame:hover { transform: rotate(0deg) scale(1.05); z-index: 10; }
+
+        .photo-frame img { width: 100%; height: 300px; object-fit: cover; display: block; }
+
+        /* 4. Password Protection Section */
+        .secret-vault {
+            background: linear-gradient(to bottom, #fff0f3, #ffccd5);
+            padding: 100px 20px;
+            text-align: center;
         }
 
-        .slide { display: none; width: 100%; height: 100%; object-fit: cover; }
-        .slide.active { display: block; animation: fade 0.8s; }
-
-        .nav-btn {
-            position: absolute; top: 50%; transform: translateY(-50%);
-            background: rgba(255,255,255,0.7); border: none;
-            padding: 10px; cursor: pointer; border-radius: 50%;
-        }
-        .prev { left: 10px; } .next { right: 10px; }
-
-        @keyframes fade { from {opacity: .4} to {opacity: 1} }
-
-        /* 5. Love Message (Typewriter) */
-        #message-box {
-            margin: 30px; text-align: center;
-            color: var(--dark-pink); font-size: 1.5rem;
-            min-height: 60px; max-width: 80%;
+        .password-box {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(255, 77, 109, 0.2);
+            display: inline-block;
         }
 
-        /* 6. Music Controls */
-        .music-ctrl {
-            position: fixed; bottom: 20px; right: 20px;
-            background: white; border-radius: 50%;
-            width: 50px; height: 50px; display: flex;
-            justify-content: center; align-items: center;
-            cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            z-index: 200;
+        input[type="password"] {
+            padding: 10px;
+            border: 2px solid var(--pink);
+            border-radius: 10px;
+            outline: none;
+            margin-bottom: 10px;
         }
 
-        /* 7. Final Love Meter */
-        .love-meter-container {
-            width: 80%; max-width: 300px;
-            background: #ddd; border-radius: 20px;
-            margin: 20px 0; overflow: hidden;
+        .unlock-btn {
+            background: var(--dark-pink);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
         }
-        #love-bar {
-            width: 0%; height: 20px;
-            background: linear-gradient(to right, var(--pink), var(--dark-pink));
-            transition: width 2s ease-out;
+
+        #hidden-content {
+            display: none;
+            margin-top: 40px;
+            animation: fadeIn 1.5s ease;
         }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Scroll Down Indicator */
+        .scroll-down {
+            position: absolute; bottom: 20px;
+            animation: bounce 2s infinite;
+            font-size: 2rem; color: var(--dark-pink);
+        }
+
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 40% {transform: translateY(-10px);} 60% {transform: translateY(-5px);} }
     </style>
 </head>
 <body>
 
-    <div id="opening-page">
-        <h1 style="color: var(--dark-pink);">For My Valentine...</h1>
-        <button class="envelope-btn" onclick="startExperience()">💌</button>
-        <p>Click to Open</p>
-    </div>
+    <section class="section-full">
+        <h1 style="color: var(--dark-pink); font-size: 3rem;">Happy Valentine's Day!</h1>
+        <p style="font-style: italic;">Scroll down to see our beautiful journey... ✨</p>
+        <div class="scroll-down">↓</div>
+    </section>
 
-    <div id="main-content">
-        <div class="slideshow-container">
-            <img src="https://picsum.photos/id/101/300/400" class="slide active">
-            <img src="https://picsum.photos/id/102/300/400" class="slide">
-            <img src="https://picsum.photos/id/103/300/400" class="slide">
-            
-            <button class="nav-btn prev" onclick="changeSlide(-1)">❮</button>
-            <button class="nav-btn next" onclick="changeSlide(1)">❯</button>
+    <section class="gallery-container">
+        <h2 style="text-align: center; color: var(--dark-pink); margin-bottom: 40px;">Our Boutique of Memories 📸</h2>
+        <div class="boutique-grid">
+            <div class="photo-frame" style="--r: -3"><img src="https://picsum.photos/300/401"></div>
+            <div class="photo-frame" style="--r: 2"><img src="https://picsum.photos/300/402"></div>
+            <div class="photo-frame" style="--r: -2"><img src="https://picsum.photos/300/403"></div>
+            <div class="photo-frame" style="--r: 4"><img src="https://picsum.photos/300/404"></div>
+        </div>
+    </section>
+
+    <section class="secret-vault">
+        <div class="password-box">
+            <h3>🔐 Locked with a Special Date</h3>
+            <p>Enter the password to see my hidden messages:</p>
+            <input type="password" id="passInput" placeholder="Enter Password...">
+            <br>
+            <button class="unlock-btn" onclick="checkPassword()">Unlock My Heart</button>
         </div>
 
-        <div id="message-box"></div>
-
-        <p style="margin-top: 20px;">My Love for You:</p>
-        <div class="love-meter-container">
-            <div id="love-bar"></div>
+        <div id="hidden-content">
+            <h2 style="color: var(--dark-pink);">My Secret Messages for You 📜</h2>
+            <div style="max-width: 600px; margin: 0 auto; line-height: 1.8; font-size: 1.2rem;">
+                <p>❤️ "I remember the day we first met like it was yesterday..."</p>
+                <p>❤️ "You are the most beautiful person I've ever known, inside and out."</p>
+                <p>❤️ "September 15 is a date I'll never forget. Thank you for being mine."</p>
+            </div>
+            <h3 style="margin-top: 50px;">I Love You Forever! 💋</h3>
         </div>
-        <h2 id="final-text" style="color: var(--dark-pink); display: none;">I Love You ❤️</h2>
-    </div>
-
-    <div class="music-ctrl" onclick="toggleMusic()">🎵</div>
-    
-    <audio id="romantic-song" loop>
-        <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
-    </audio>
+    </section>
 
     <script>
-        // 1. Particle System (Hearts & Petals)
-        function createParticle() {
-            const symbols = ['❤️', '🌸', '🌹', '✨', '💖'];
-            const p = document.createElement('div');
-            p.classList.add('particle');
-            p.innerText = symbols[Math.floor(Math.random() * symbols.length)];
-            p.style.left = Math.random() * 100 + 'vw';
-            p.style.animationDuration = (Math.random() * 3 + 2) + 's';
-            p.style.fontSize = (Math.random() * 20 + 10) + 'px';
-            document.body.appendChild(p);
-            setTimeout(() => p.remove(), 5000);
-        }
-
-        // 2. Start Experience
-        function startExperience() {
-            document.getElementById('opening-page').style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('opening-page').style.display = 'none';
-                document.getElementById('main-content').style.display = 'flex';
-                // Start music
-                document.getElementById('romantic-song').play();
-                // Start particle flow
-                setInterval(createParticle, 300);
-                // Start Love Meter
-                setTimeout(() => {
-                    document.getElementById('love-bar').style.width = '100%';
-                    setTimeout(() => document.getElementById('final-text').style.display = 'block', 2000);
-                }, 500);
-                // Start Typewriter
-                startTypewriter();
-            }, 1000);
-        }
-
-        // 3. Slideshow Logic
-        let currentSlide = 0;
-        function changeSlide(n) {
-            const slides = document.querySelectorAll('.slide');
-            slides[currentSlide].classList.remove('active');
-            currentSlide = (currentSlide + n + slides.length) % slides.length;
-            slides[currentSlide].classList.add('active');
-        }
-
-        // 4. Typewriter Effect
-        const messages = [
-            "I'm thankful to have you in my life ❤️",
-            "You make my world beautiful.",
-            "Happy Valentine’s Day, my love!",
-            "Every moment with you is a treasure."
-        ];
-        let msgIndex = 0;
-        function startTypewriter() {
-            const box = document.getElementById('message-box');
-            let charIndex = 0;
-            box.innerHTML = "";
+        // Floating Hearts logic
+        function createFlower() {
+            const flower = document.createElement('div');
+            flower.innerHTML = Math.random() > 0.5 ? '🌸' : '🌹';
+            flower.style.position = 'fixed';
+            flower.style.top = '-50px';
+            flower.style.left = Math.random() * 100 + 'vw';
+            flower.style.fontSize = Math.random() * 20 + 10 + 'px';
+            flower.style.opacity = Math.random();
+            flower.style.zIndex = '0';
             
-            function type() {
-                if (charIndex < messages[msgIndex].length) {
-                    box.innerHTML += messages[msgIndex].charAt(charIndex);
-                    charIndex++;
-                    setTimeout(type, 100);
-                } else {
-                    setTimeout(() => {
-                        msgIndex = (msgIndex + 1) % messages.length;
-                        startTypewriter();
-                    }, 2000);
-                }
-            }
-            type();
+            const duration = Math.random() * 5 + 5;
+            flower.style.transition = `transform ${duration}s linear, opacity ${duration}s`;
+            
+            document.body.appendChild(flower);
+
+            setTimeout(() => {
+                flower.style.transform = `translateY(110vh) rotate(${Math.random() * 360}deg)`;
+            }, 100);
+
+            setTimeout(() => flower.remove(), duration * 1000);
         }
 
-        // 5. Music Toggle
-        function toggleMusic() {
-            const song = document.getElementById('romantic-song');
-            song.paused ? song.play() : song.pause();
+        setInterval(createFlower, 400);
+
+        // Password Logic
+        function checkPassword() {
+            const input = document.getElementById('passInput').value;
+            const vault = document.getElementById('hidden-content');
+            
+            if (input === "September15") {
+                vault.style.display = "block";
+                document.querySelector('.password-box').style.display = "none";
+                window.scrollBy(0, 400); // Scroll down a bit to show content
+            } else {
+                alert("Incorrect Password! Hint: Think of our special date.");
+            }
         }
     </script>
 </body>
